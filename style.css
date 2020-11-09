@@ -4,3 +4,19 @@ header {
   padding: 1px;
   text-align: center;
 }
+
+.red {
+  background-color: red;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.green {
+  background-color: green;
+}

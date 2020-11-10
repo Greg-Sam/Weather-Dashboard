@@ -56,13 +56,10 @@
         <div class="col">
           <div class="card ">
             <div class="card-body bg-primary">
-              <h5 class="card-title" id=tomorrow>Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.
-              </p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
+              <h5 class="card-title" id="tomorrow">Card title</h5>
+              <p id="tomorrowIcon"></p>
+              <p id="tomorrowTemp"></p>
+              <p id="tomorrowHumid"></p>
             </div>
           </div>
         </div>
@@ -141,8 +138,9 @@
     fiveDays = moment().add(5, 'days').format("(MM/DD/YYYY)")
     // --- retrieve cities from local storage
     let cities = JSON.parse(localStorage.getItem('cities')) || []
-
+    // ---define function for displaying cities
     let displayCities = () => {
+
       for (let i = 0; i < cities.length; i++) {
         let cityList = document.createElement('li')
         cityList.className = 'list-group-item d-flex justify-content-between align-items-center city'
@@ -150,7 +148,7 @@
         document.getElementById('cities').append(cityList)
       }
     }
-
+    // --- function for getting weather from city list click
     document.addEventListener('click', event => {
       if (event.target.classList.contains('city')) {
         console.log(event.target.textContent)
@@ -160,21 +158,26 @@
       }
     })
 
-    displayCities(cities)
+    // ---function for getting weather for form entry button click
     document.getElementById('searchCity').addEventListener('click', event => {
       event.preventDefault()
 
       let city = document.getElementById('search').value
       getWeather(city)
+      // --- only add new city to cities list
       if (cities.includes(city)) {
       } else {
         cities.push(city)
       }
+      // ---add updated city list to local storage list
       localStorage.setItem('cities', JSON.stringify(cities))
-      cityList.innerHTML = ''
-      displayCities(cities)
-    })
 
+      document.getElementById('cities').innerHTML = ''
+
+      displayCities(cities)
+
+    })
+    displayCities(cities)
 
     const getWeather = (a) => {
 
@@ -209,19 +212,26 @@
                 document.getElementById('uv').classList.add('red')
               } else if
                 (uv > 6) {
-                 document.getElementById('uv').classList.remove("red", "green", "yellow")
+                document.getElementById('uv').classList.remove("red", "green", "yellow")
                 document.getElementById('uv').classList.add('orange')
               } else if
                 (uv > 3) {
-                 document.getElementById('uv').classList.remove("orange", "green", "red")
+                document.getElementById('uv').classList.remove("orange", "green", "red")
                 document.getElementById('uv').classList.add('yellow')
               } else {
-                 document.getElementById('uv').classList.remove("orange", "red", "yellow")
+                document.getElementById('uv').classList.remove("orange", "red", "yellow")
                 document.getElementById('uv').classList.add('green')
               }
-              axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${a}&units=imperial&cnt=5&appid=6b67c8662f88a1cf40656bea20032f5e`)
+              axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${a}&units=imperial&cnt=20&appid=6b67c8662f88a1cf40656bea20032f5e`)
                 .then(res3 => {
-                  console.log(res3)
+                  let tomWeather = (res3.data.list[6])
+                  let tomTemp = (tomWeather.main.temp)
+                  let tomHum = (tomWeather.main.humidity)
+                  console.log(tomWeather)
+                  let tomIcon = (tomWeather.weather[0].icon) + ".png"
+                  document.getElementById('tomorrowIcon').innerHTML = `<img src="./images/${tomIcon}" alt="">`
+                  document.getElementById('tomorrowTemp').innerHTML = `Temp: ${tomTemp} °F`
+                  document.getElementById('tomorrowHumid').innerHTML = `Humidity: ${tomHum}%`
                 })
                 .catch(err => console.error(err))
             })
@@ -237,6 +247,7 @@
 
 
     document.getElementById('tomorrow').textContent = tomorrow
+    
     document.getElementById('2days').textContent = twoDays
     document.getElementById('3days').textContent = threeDays
     document.getElementById('4days').textContent = fourDays

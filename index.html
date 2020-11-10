@@ -19,15 +19,11 @@
     <div class="col-sm-3 bg-light">
       <h3>Search for City:</h3>
       <form>
-        <div class="row mx-1">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="City name" aria-describedby="button-addon2"
-              id="search">
-            <div class="input-group-append">
-              <button class="bg-primary text-white" type="button" id="searchCity">Search</button>
-            </div>
-          </div>
-        </div>
+        <p>
+          <label for="search"></label>
+          <input type="text" name="search" placeholder="City name" id="search">
+          <button class="bg-primary" id="searchCity">Search</button>
+        </p>
       </form>
       <div class="row">
         <div id='cities' class="col mx-auto ">

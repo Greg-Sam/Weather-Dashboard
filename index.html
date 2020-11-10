@@ -11,147 +11,250 @@
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Weather Dashboard</h1>
-    </header>
-    <div class="row">
-      <div class="col-sm-4 bg-light">
-        <h3>Search for City:</h3>
-        <form>
-          <div class="row mx-1">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="City name" aria-describedby="button-addon2"
-                id="search">
-              <div class="input-group-append">
-                <button class="bg-primary text-white" type="button" id="searchCity">Search</button>
-              </div>
+
+  <header>
+    <h1>Weather Dashboard</h1>
+  </header>
+  <div class="row">
+    <div class="col-sm-3 bg-light">
+      <h3>Search for City:</h3>
+      <form>
+        <div class="row mx-1">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="City name" aria-describedby="button-addon2"
+              id="search">
+            <div class="input-group-append">
+              <button class="bg-primary text-white" type="button" id="searchCity">Search</button>
             </div>
           </div>
-        </form>
-        <div class="row">
-          <div id='cities' class="col mx-auto ">
+        </div>
+      </form>
+      <div class="row">
+        <div id='cities' class="col mx-auto ">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="row ml-2 mt-3">
+        <h1 id="city">
+        </h1>
+
+      </div>
+      <div class="row ml-2">
+        <p id="temp"></p>
+      </div>
+      <div class="row ml-2">
+        <p id="humid"></p>
+      </div>
+      <div class="row ml-2">
+        <p id="wind"></p>
+      </div>
+      <div class="row ml-2">
+        <p id="uv"></p>
+      </div>
+      <hr>
+      <div class="row">
+        <h2>5-Day Forecast</h2>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card ">
+            <div class="card-body bg-primary">
+              <h5 class="card-title" id=tomorrow>Card title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+              </p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card ">
+            <div class="card-body bg-primary">
+              <h5 class="card-title" id="2days">Card title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+              </p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body bg-primary">
+              <h5 class="card-title" id="3days">Card title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+              </p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card ">
+            <div class="card-body bg-primary">
+              <h5 class="card-title" id="4days">Card title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+              </p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card ">
+            <div class="card-body bg-primary">
+              <h5 class="card-title" id="5days">Card title</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+              </p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-sm-8">
-        <div class="row ml-2 mt-3">
-          <h1 id="city">
-          </h1>
-
-        </div>
-        <div class="row ml-2">
-          <p id="temp"></p>
-        </div>
-        <div class="row ml-2">
-          <p id="humid"></p>
-        </div>
-        <div class="row ml-2">
-          <p id="wind"></p>
-        </div>
-        <div class="row ml-2">
-          <p id="uv"></p>
-        </div>
-        <hr>
-        <div class="row">
-          <h2>5-Day Forecast</h2>
-        </div>
-        <div class="row">
-          <div class="card"></div>
-        </div>
-      </div>
     </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </div>
 
 
-    <script>
-      
-      date = moment().format("(MM/DD/YYYY)")
-      console.log(date)
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-      let cities = JSON.parse(localStorage.getItem('cities'))
-      if (cities) { }
-      else {
-        cities = ['Empty']
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+  <script>
+    //--- get dates
+    date = moment().format("(MM/DD/YYYY)")
+    console.log(date)
+    tomorrow = moment().add(1, 'days').format("(MM/DD/YYYY)")
+    console.log(tomorrow)
+    tomorrow = moment().add(1, 'days').format("(MM/DD/YYYY)")
+    twoDays = moment().add(2, 'days').format("(MM/DD/YYYY)")
+    threeDays = moment().add(3, 'days').format("(MM/DD/YYYY)")
+    fourDays = moment().add(4, 'days').format("(MM/DD/YYYY)")
+    fiveDays = moment().add(5, 'days').format("(MM/DD/YYYY)")
+    // --- retrieve cities from local storage
+    let cities = JSON.parse(localStorage.getItem('cities')) || []
+
+    let displayCities = () => {
+      for (let i = 0; i < cities.length; i++) {
+        let cityList = document.createElement('li')
+        cityList.className = 'list-group-item d-flex justify-content-between align-items-center city'
+        cityList.innerHTML = cities[i]
+        document.getElementById('cities').append(cityList)
       }
-      let displayCities = () => {
-        if (cities[0] === 'Empty') {
-          cities.pop()
-        } else {
-          for (let i = 0; i < cities.length; i++) {
-            let cityList = document.createElement('li')
-            cityList.className = 'list-group-item d-flex justify-content-between align-items-center city'
-            cityList.innerHTML = cities[i]
-            document.getElementById('cities').append(cityList)
-          }
-        }
+    }
+
+    document.addEventListener('click', event => {
+      if (event.target.classList.contains('city')) {
+        console.log(event.target.textContent)
+        let city = event.target.textContent
+        getWeather(city)
+
       }
-      displayCities()
+    })
 
-      const getWeather = () => {
-        document.getElementById('searchCity').addEventListener('click', event => {
-          event.preventDefault()
-          let city = document.getElementById('search').value
-          if (cities.includes(city)) {
-          } else {
-            cities.push(city)
-          }
-          localStorage.setItem('cities', JSON.stringify(cities))
-          document.getElementById('search').value = ''
-         
-          axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=6b67c8662f88a1cf40656bea20032f5e`)
-            .then(res => {
-              let cityWeather = res.data
-              let temp = cityWeather.main.temp
-              let humidity = cityWeather.main.humidity
-              let wind = cityWeather.wind.speed
-              let lat = cityWeather.coord.lat
-              let lon = cityWeather.coord.lon
-              let officialCity = cityWeather.name
-              let icon = cityWeather.weather[0].icon + ".png"
+    displayCities(cities)
+    document.getElementById('searchCity').addEventListener('click', event => {
+      event.preventDefault()
 
-              document.getElementById('city').innerHTML = `${officialCity}  ${date}  <img src="./images/${icon}" alt="">`
-              document.getElementById('temp').innerHTML = `Temperature: ${temp} °F`
-              document.getElementById('humid').innerHTML = `Humidity: ${humidity}%`
-              document.getElementById('wind').innerHTML = `Wind Speed: ${wind}MPH`
+      let city = document.getElementById('search').value
+      getWeather(city)
+      if (cities.includes(city)) {
+      } else {
+        cities.push(city)
+      }
+      localStorage.setItem('cities', JSON.stringify(cities))
+      cityList.innerHTML = ''
+      displayCities(cities)
+    })
 
-              axios.get(`http://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=6b67c8662f88a1cf40656bea20032f5e`)
-                .then(res2 => {
-                  let uv = res2.data.value
-                  document.getElementById('uv').innerHTML = `UV Index: ${uv}`
-                  if (uv > 8) {
-                    document.getElementById('uv').classList.add('red')
-                  } else if
-                    (uv > 6) {
-                    document.getElementById('uv').classList.add('orange')
-                  } else if
-                    (uv > 3) {
-                    document.getElementById('uv').classList.add('yellow')
-                  } else {
-                    document.getElementById('uv').classList.add('green')
-                  }
-              
+
+    const getWeather = (a) => {
+
+      // let city = document.getElementById('search').value
+
+      document.getElementById('search').value = ''
+
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${a}&units=imperial&appid=6b67c8662f88a1cf40656bea20032f5e`)
+        .then(res => {
+          let cityWeather = res.data
+          let temp = cityWeather.main.temp
+          let humidity = cityWeather.main.humidity
+          let wind = cityWeather.wind.speed
+          let lat = cityWeather.coord.lat
+          let lon = cityWeather.coord.lon
+          let officialCity = cityWeather.name
+          let icon = cityWeather.weather[0].icon + ".png"
+
+          document.getElementById('city').innerHTML = `${officialCity}  ${date}  <img src="./images/${icon}" alt="">`
+          document.getElementById('temp').innerHTML = `Temperature: ${temp} °F`
+          document.getElementById('humid').innerHTML = `Humidity: ${humidity}%`
+          document.getElementById('wind').innerHTML = `Wind Speed: ${wind}MPH`
+
+          axios.get(`https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=6b67c8662f88a1cf40656bea20032f5e`)
+            .then(res2 => {
+              let uv = res2.data.value
+              document.getElementById('uv').innerHTML = `UV Index: ${uv}`
+              console.log(uv)
+
+              if (uv > 8) {
+                document.getElementById('uv').classList.remove("orange", "green", "yellow")
+                document.getElementById('uv').classList.add('red')
+              } else if
+                (uv > 6) {
+                 document.getElementById('uv').classList.remove("red", "green", "yellow")
+                document.getElementById('uv').classList.add('orange')
+              } else if
+                (uv > 3) {
+                 document.getElementById('uv').classList.remove("orange", "green", "red")
+                document.getElementById('uv').classList.add('yellow')
+              } else {
+                 document.getElementById('uv').classList.remove("orange", "red", "yellow")
+                document.getElementById('uv').classList.add('green')
+              }
+              axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${a}&units=imperial&cnt=5&appid=6b67c8662f88a1cf40656bea20032f5e`)
+                .then(res3 => {
+                  console.log(res3)
                 })
                 .catch(err => console.error(err))
             })
+
             .catch(err => console.error(err))
         })
-        
-      }
-      getWeather()
-      
-    </script>
+        .catch(err => console.error(err))
+    }
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-      crossorigin="anonymous"></script>
+
+
+
+
+
+    document.getElementById('tomorrow').textContent = tomorrow
+    document.getElementById('2days').textContent = twoDays
+    document.getElementById('3days').textContent = threeDays
+    document.getElementById('4days').textContent = fourDays
+    document.getElementById('5days').textContent = fiveDays
+  </script>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -52,14 +52,14 @@
       <div class="row">
         <h2>5-Day Forecast</h2>
       </div>
-      <div class="row">
-        <div class="col">
+      <div id="forecast" class="row">
+        <!-- <div class="col">
           <div class="card ">
             <div class="card-body bg-primary">
-              <h5 class="card-title" id="tomorrow">Card title</h5>
-              <p id="tomorrowIcon"></p>
-              <p id="tomorrowTemp"></p>
-              <p id="tomorrowHumid"></p>
+              <h5 class="card-title" id="1day">Card title</h5>
+              <p id="1dayIcon"></p>
+              <p id="1dayTemp"></p>
+              <p id="1dayHumid"></p>
             </div>
           </div>
         </div>
@@ -67,12 +67,9 @@
           <div class="card ">
             <div class="card-body bg-primary">
               <h5 class="card-title" id="2days">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.
-              </p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
+              <p id="1dayIcon"></p>
+              <p id="1dayTemp"></p>
+              <p id="1dayHumid"></p>
             </div>
           </div>
         </div>
@@ -114,11 +111,12 @@
               <a href="#" class="card-link">Another link</a>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
-
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
@@ -128,9 +126,9 @@
   <script>
     //--- get dates
     date = moment().format("(MM/DD/YYYY)")
-    console.log(date)
+    // console.log(date)
     tomorrow = moment().add(1, 'days').format("(MM/DD/YYYY)")
-    console.log(tomorrow)
+    // console.log(tomorrow)
     tomorrow = moment().add(1, 'days').format("(MM/DD/YYYY)")
     twoDays = moment().add(2, 'days').format("(MM/DD/YYYY)")
     threeDays = moment().add(3, 'days').format("(MM/DD/YYYY)")
@@ -151,7 +149,7 @@
     // --- function for getting weather from city list click
     document.addEventListener('click', event => {
       if (event.target.classList.contains('city')) {
-        console.log(event.target.textContent)
+        // console.log(event.target.textContent)
         let city = event.target.textContent
         getWeather(city)
 
@@ -205,7 +203,7 @@
             .then(res2 => {
               let uv = res2.data.value
               document.getElementById('uv').innerHTML = `UV Index: ${uv}`
-              console.log(uv)
+              // console.log(uv)
 
               if (uv > 8) {
                 document.getElementById('uv').classList.remove("orange", "green", "yellow")
@@ -222,16 +220,29 @@
                 document.getElementById('uv').classList.remove("orange", "red", "yellow")
                 document.getElementById('uv').classList.add('green')
               }
-              axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${a}&units=imperial&cnt=20&appid=6b67c8662f88a1cf40656bea20032f5e`)
+              axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&units=imperial&appid=6b67c8662f88a1cf40656bea20032f5e`)
                 .then(res3 => {
-                  let tomWeather = (res3.data.list[6])
-                  let tomTemp = (tomWeather.main.temp)
-                  let tomHum = (tomWeather.main.humidity)
-                  console.log(tomWeather)
-                  let tomIcon = (tomWeather.weather[0].icon) + ".png"
-                  document.getElementById('tomorrowIcon').innerHTML = `<img src="./images/${tomIcon}" alt="">`
-                  document.getElementById('tomorrowTemp').innerHTML = `Temp: ${tomTemp} °F`
-                  document.getElementById('tomorrowHumid').innerHTML = `Humidity: ${tomHum}%`
+
+                  let forecast = res3.data.daily
+                  console.log(forecast)
+                  $('#forecast').empty()
+                  for (let i = 1; i < 6; i++) {
+                    let icon = forecast[i].weather[0].icon + ".png"
+                    let col = $('<div>').addClass('col')
+                    let card = $('<div>').addClass('card')
+                    let cardBody = $('<div>').addClass('card-body bg-primary text-white')
+                    let cardDate = $('<h5>').addClass('card-title').attr('id', `${i}day`).text(moment().add(i, 'days').format("MM/DD/YYYY"))
+                    let cardIcon = $('<p>').attr('id', `${i}Icon`).innerHTML = `<img src="./images/${icon}" alt="">`
+                    let cardTemp = $('<p>').attr('id', `${i}Temp`).text(`Temp: ${forecast[i].temp.day}°F`)
+                    let cardHumid = $('<p>').attr('id', `${i}Humid`).text(`Humidity: ${forecast[i].humidity}%`)
+
+                    $('#forecast').append(col)
+                    $(col).append(card)
+                    $(card).append(cardBody)
+                    $(cardBody).append(cardDate, cardIcon, cardTemp, cardHumid)
+
+                  }
+                  
                 })
                 .catch(err => console.error(err))
             })
@@ -241,17 +252,6 @@
         .catch(err => console.error(err))
     }
 
-
-
-
-
-
-    document.getElementById('tomorrow').textContent = tomorrow
-    
-    document.getElementById('2days').textContent = twoDays
-    document.getElementById('3days').textContent = threeDays
-    document.getElementById('4days').textContent = fourDays
-    document.getElementById('5days').textContent = fiveDays
   </script>
 
 
